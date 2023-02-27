@@ -1,6 +1,5 @@
-from importlib.resources import Resource
 from flask import request
-from flask_restx import abort, Namespace
+from flask_restx import abort, Namespace, Resource
 
 from implemented import user_service, auth_service
 
@@ -23,8 +22,9 @@ class AuthLoginView(Resource):
         email = data.get('email')
         password = data.get('password')
 
-        if not email or not password:
-            abort(400)
+        try:
+            tokens = auth_service.generate_token(email, password)
+            return tokens, 201
 
-        tokens = auth_service.generate_token(email=email, password=password)
-        return tokens, 201
+        except Exception as e:
+            abort(401)
