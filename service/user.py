@@ -19,4 +19,4 @@ class UserService:
 
     def compare_passwords(self, password, other_password):
         hash_pas = self.dao.get_hash(other_password)
-        return self.dao.comprare_passwords(password, hash_pas)
+        return hash_pas == password

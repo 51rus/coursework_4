@@ -16,7 +16,7 @@ class AuthService:
         if user is None:
             abort(400)
 
-        if not self.user_service.comprare_passwords(user.password, password):
+        if not self.user_service.compare_passwords(user.password, password):
             abort(400)
 
         data = {
